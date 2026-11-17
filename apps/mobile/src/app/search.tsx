@@ -59,6 +59,8 @@ export default function SearchScreen() {
 
   const openPlace = (id: string) => router.push(`/place/${id}`);
   const selectSuggestion = (s: NeedSuggestion) => {
+    // Un besoin précis remplace le thème choisi depuis Explorer.
+    setCategories([]);
     setQuery(s.label);
     setInputFocused(false);
     void track('search_performed', { need_id: s.id });

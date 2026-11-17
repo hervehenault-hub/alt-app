@@ -10,7 +10,8 @@
     "export": "expo export --platform ios --platform android && node scripts/check-prod-bundle.mjs dist",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "jest",
-    "check:prod-bundle": "node scripts/check-prod-bundle.mjs"
+    "check:prod-bundle": "node scripts/check-prod-bundle.mjs",
+    "demo:build": "node scripts/build-demo.mjs"
   },
   "dependencies": {
     "@alt/shared": "workspace:*",

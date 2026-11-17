@@ -8,3 +8,5 @@ supabase/.temp
 content/
 docs/rgpd/
 docs/beta/
+apps/mobile/dist-demo
+apps/mobile/public/maplibre

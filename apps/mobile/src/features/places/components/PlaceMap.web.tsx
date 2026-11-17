@@ -4,10 +4,11 @@ import {
   Map as MapLibreMap,
   Marker,
   NavigationControl,
+  setWorkerUrl,
   type GeoJSONSource,
   type MapLayerMouseEvent,
 } from 'maplibre-gl';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Button, Text } from '@/components';
@@ -22,6 +23,22 @@ import {
   type PlaceMapProps,
 } from './mapData';
 
+/**
+ * Le « worker » de maplibre-gl est servi à côté de l'app (copié par `pnpm demo:build` dans
+ * public/maplibre). On calcule son adresse depuis le script principal pour fonctionner aussi
+ * dans un sous-dossier.
+ */
+function configureWorker() {
+  if (typeof document === 'undefined') return;
+  const marker = '/static/js/web/';
+  const entry = Array.from(document.scripts).find((s) => s.src.includes(marker));
+  // …/<base>/_expo/static/js/web/entry.js → …/<base>/
+  const base = entry
+    ? entry.src.slice(0, entry.src.lastIndexOf('/', entry.src.indexOf(marker) - 1) + 1)
+    : `${location.origin}/`;
+  setWorkerUrl(`${base}maplibre/maplibre-gl-worker.mjs`);
+}
+
 /** Carte web (maplibre-gl) : mêmes marqueurs, regroupement et attribution que sur mobile. */
 export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMapProps) {
   const container = useRef<HTMLDivElement | null>(null);
@@ -31,9 +48,11 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
     openRef.current = onOpenPlace;
   }, [onOpenPlace]);
   const data = useMemo(() => toFeatureCollection(places), [places]);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     if (!container.current) return;
+    configureWorker();
     const instance = new MapLibreMap({
       container: container.current,
       style: MAP_STYLE_URL,
@@ -42,6 +61,10 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
       attributionControl: false,
     });
     map.current = instance;
+    // Style ou tuiles injoignables (hors connexion) : message clair, la liste reste utilisable.
+    instance.on('error', () => {
+      if (!instance.isStyleLoaded()) setFailed(true);
+    });
     instance.addControl(new NavigationControl({ showCompass: false }), 'top-right');
     instance.on('load', () => {
       instance.addSource('places', {
@@ -146,6 +169,11 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
       accessibilityLabel={t('places.map.a11yLabel')}
     >
       <div ref={container} style={{ position: 'absolute', inset: 0 }} />
+      {failed ? (
+        <View style={styles.failed} testID="place-map-error">
+          <Text align="center">{t('places.map.loadError')}</Text>
+        </View>
+      ) : null}
       <View style={styles.overlay} pointerEvents="box-none">
         <Button
           variant="secondary"
@@ -167,6 +195,13 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
 const styles = StyleSheet.create({
   container: { flex: 1, minHeight: 360, borderRadius: radii.lg, overflow: 'hidden' },
   overlay: { position: 'absolute', right: spacing.sm, bottom: spacing.xl },
+  failed: {
+    ...StyleSheet.absoluteFill,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: spacing.lg,
+    backgroundColor: colors.pastelSky,
+  },
   attribution: {
     position: 'absolute',
     left: spacing.xs,

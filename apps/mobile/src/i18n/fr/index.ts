@@ -8,6 +8,8 @@ import { categories } from './categories';
 import { common } from './common';
 import { devCatalogue } from './devCatalogue';
 import { home } from './home';
+import { impact } from './impact';
+import { journey } from './journey';
 import { location } from './location';
 import { navigation } from './navigation';
 import { onboarding } from './onboarding';
@@ -24,6 +26,8 @@ export const fr = {
   common,
   devCatalogue,
   home,
+  impact,
+  journey,
   location,
   navigation,
   onboarding,

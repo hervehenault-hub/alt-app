@@ -73,6 +73,12 @@ jobs:
       - name: Tests pgTAP
         run: pnpm test:db
 
+      - name: Chargement du contenu, deux fois (T6.3, rejouable sans doublon)
+        run: |
+          pnpm content:load
+          pnpm content:load
+          test "$(psql postgresql://postgres:postgres@127.0.0.1:54322/postgres -tAc 'select count(*) from public.actions')" = "30"
+
       - name: Types Supabase à jour
         run: |
           pnpm db:types

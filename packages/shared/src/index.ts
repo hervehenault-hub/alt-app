@@ -21,3 +21,6 @@ export type {
 
 // Contenu éditorial (content/actions.json, content/impact-factors.json)
 export * from './content';
+
+// Parcours pas à pas (T6.4)
+export * from './journey';

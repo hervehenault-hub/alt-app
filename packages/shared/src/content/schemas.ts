@@ -35,7 +35,9 @@ export const PLACE_CATEGORIES = [
 export const placeCategorySchema = z.enum(PLACE_CATEGORIES);
 export type PlaceCategory = z.infer<typeof placeCategorySchema>;
 
-const slugSchema = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'identifiant au format slug attendu');
+const slugSchema = z
+  .string()
+  .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'identifiant au format slug attendu');
 
 export const actionSchema = z.strictObject({
   id: slugSchema,

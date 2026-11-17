@@ -27,6 +27,15 @@ export default function ProfileScreen() {
             testID="profile-sign-out"
           />
         </Card>
+      ) : null}
+      {status === 'signedIn' ? (
+        <Button
+          variant="secondary"
+          label={t('contribution.mine.open')}
+          accessibilityHint={t('contribution.mine.openHint')}
+          onPress={() => router.push('/mes-contributions')}
+          testID="profile-contributions"
+        />
       ) : (
         <SignInPrompt testID="sign-in-prompt" />
       )}

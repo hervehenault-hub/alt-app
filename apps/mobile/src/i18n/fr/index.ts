@@ -6,6 +6,7 @@
 import { auth } from './auth';
 import { categories } from './categories';
 import { common } from './common';
+import { contribution } from './contribution';
 import { devCatalogue } from './devCatalogue';
 import { home } from './home';
 import { impact } from './impact';
@@ -24,6 +25,7 @@ export const fr = {
   auth,
   categories,
   common,
+  contribution,
   devCatalogue,
   home,
   impact,

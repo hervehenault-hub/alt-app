@@ -8,6 +8,7 @@ import MapPinOff from 'lucide-react-native/icons/map-pin-off';
 import Navigation from 'lucide-react-native/icons/navigation';
 import WifiOff from 'lucide-react-native/icons/wifi-off';
 import { useEffect, useState } from 'react';
+import { getContributionRepository } from '@/features/contribution/repository';
 import { Linking, Platform, StyleSheet, View } from 'react-native';
 
 import {
@@ -50,6 +51,7 @@ export default function PlaceScreen() {
   const { data: place, isPending, isError, refetch } = usePlace(id);
   const [copied, setCopied] = useState(false);
   const [showBasis, setShowBasis] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
 
   useEffect(() => {
     if (place) void trackPlaceViewed(place.id);
@@ -216,6 +218,38 @@ export default function PlaceScreen() {
           source: t(`places.sources.${place.source}` as TranslationKey),
         })}
       </Text>
+
+      <Card tone="cream" testID="place-confirm">
+        <Text variant="label">{t('contribution.confirm.question')}</Text>
+        {confirmed ? (
+          <Text accessibilityRole="alert" testID="place-confirm-thanks">
+            {t('contribution.confirm.thanks')}
+          </Text>
+        ) : (
+          <View style={styles.row}>
+            <Button
+              variant="secondary"
+              label={t('contribution.confirm.yes')}
+              accessibilityHint={t('contribution.confirm.yesHint')}
+              onPress={() =>
+                requireAccount(() => {
+                  setConfirmed(true);
+                  void getContributionRepository()
+                    .confirm(place.id)
+                    .catch(() => undefined);
+                })
+              }
+              testID="place-confirm-yes"
+            />
+            <Button
+              variant="tertiary"
+              label={t('contribution.confirm.no')}
+              onPress={() => requireAccount(() => router.push(`/place/${place.id}/signaler`))}
+              testID="place-confirm-no"
+            />
+          </View>
+        )}
+      </Card>
 
       <Button
         variant="tertiary"

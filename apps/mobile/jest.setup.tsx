@@ -7,6 +7,7 @@ import {
   resetJourneyProgressForTests,
   setProgressRepositoryForTests,
 } from '@/features/journey/progress';
+import { setContributionRepositoryForTests } from '@/features/contribution/repository';
 import { setPlacesRepositoryForTests } from '@/features/places/repository';
 import { resetSearchStateForTests } from '@/features/places/searchState';
 import { resetAnalyticsForTests } from '@/lib/analytics';
@@ -75,6 +76,7 @@ beforeEach(() => {
   resetJourneyProgressForTests();
   setProgressRepositoryForTests(undefined);
   setPlacesRepositoryForTests(undefined);
+  setContributionRepositoryForTests(undefined);
   setStorage(createMemoryStorage());
   // Par défaut : pas de serveur (comme le mode démo) ; les tests qui en ont besoin en injectent un.
   setSupabaseForTests(null);

@@ -1072,6 +1072,14 @@ export type Database = {
       need_search_document: { Args: { label: string; synonyms: string[] }; Returns: string };
       normalize_search_text: { Args: { value: string }; Returns: string };
       place_confirmations_threshold: { Args: Record<PropertyKey, never>; Returns: number };
+      report_place: {
+        Args: {
+          comment?: string;
+          place_id: string;
+          reason: Database['public']['Enums']['place_report_reason'];
+        };
+        Returns: Json;
+      };
       search_needs: {
         Args: { max_results?: number; q: string };
         Returns: {
@@ -1118,6 +1126,8 @@ export type Database = {
           walk_accessible: boolean;
         }[];
       };
+      submission_daily_limit: { Args: Record<PropertyKey, never>; Returns: number };
+      submit_place: { Args: { payload: Json }; Returns: Json };
     };
     Enums: {
       action_effort: 'faible' | 'moyen';

@@ -33,9 +33,11 @@ function Figure({
   metric,
   tone,
   testID,
+  detail,
 }: {
   label: string;
   value: string;
+  detail?: string;
   metric: ImpactMetric;
   tone: CardTone;
   testID: string;
@@ -44,7 +46,10 @@ function Figure({
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={t('impact.figureA11y', { label, value })}
+      accessibilityLabel={t('impact.figureA11y', {
+        label,
+        value: detail ? `${value} ${detail}` : value,
+      })}
       accessibilityHint={t('impact.howComputedHint')}
       onPress={() => router.push(`/methode/${metric}`)}
       style={styles.figure}
@@ -53,6 +58,7 @@ function Figure({
       <Card tone={tone} style={styles.figureCard}>
         <Text variant="caption">{label}</Text>
         <Text variant="display">{value}</Text>
+        {detail ? <Text>{detail}</Text> : null}
         <View style={styles.link}>
           <Text variant="caption">{t('impact.howComputed')}</Text>
           <Icon icon={ChevronRight} size={16} />
@@ -120,11 +126,13 @@ export default function ImpactScreen() {
             label={t('impact.impactTitle')}
             value={
               equivalence
-                ? t('impact.impactValue', {
-                    quantity: equivalence.quantity,
-                    unit: equivalence.label,
-                  })
-                : t('impact.impactKg', { kg: formatEuros(report.total.impactKgCo2e) })
+                ? t('impact.impactValue', { quantity: equivalence.quantity })
+                : t('impact.impactKgValue', { kg: formatEuros(report.total.impactKgCo2e) })
+            }
+            detail={
+              equivalence
+                ? t('impact.impactEquivalence', { label: equivalence.label })
+                : t('impact.impactKgUnit')
             }
             metric="impact"
             tone="coral"

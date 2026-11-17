@@ -1,0 +1,11 @@
+node_modules
+dist
+.expo
+coverage
+pnpm-lock.yaml
+supabase/.temp
+packages/shared/src/database.types.ts
+# Contenus gérés par d'autres sessions
+content/
+docs/rgpd/
+docs/beta/

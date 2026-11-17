@@ -1,0 +1,11 @@
+{
+  "name": "@alt/shared",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Code partagé : schémas zod, types (dont types Supabase générés), fonctions pures.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

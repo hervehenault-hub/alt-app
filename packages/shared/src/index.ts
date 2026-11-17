@@ -18,3 +18,6 @@ export type {
   TablesInsert,
   TablesUpdate,
 } from './database.types';
+
+// Contenu éditorial (content/actions.json, content/impact-factors.json)
+export * from './content';

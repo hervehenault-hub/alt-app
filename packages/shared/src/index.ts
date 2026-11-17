@@ -28,3 +28,6 @@ export * from './journey';
 // Impact des actions réalisées (T7.1)
 export * from './impact';
 export { parisCalendarDate, parisUtcOffsetHours, type CalendarDate } from './time/paris';
+
+// Jardin de progression (T9.3)
+export * from './garden';

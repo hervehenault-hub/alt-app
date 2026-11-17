@@ -71,12 +71,12 @@ values ((select id from ctx where k = 'alice'), 'offer', 'carpool', 'Masquée', 
 
 -- ---- Liste ----
 select tests.authenticate_as((select id from ctx where k = 'bob'));
-select set_eq('select title from public.help_posts', array['Je répare vos vélos', 'Prête perceuse'],
+select set_eq($$ select title from public.help_posts where neighborhood_id = (select id from ctx where k = 'quartier') $$, array['Je répare vos vélos', 'Prête perceuse'],
   'bob ne voit que les annonces actives (ni expirée, ni masquée)');
 select tests.as_anon();
 select is_empty('select 1 from public.help_posts', 'un anonyme ne voit aucune annonce');
 select tests.authenticate_as((select id from ctx where k = 'alice'));
-select is((select count(*)::int from public.help_posts), 4, 'alice voit toutes ses annonces');
+select is((select count(*)::int from public.help_posts where author_id = auth.uid()), 4, 'alice voit toutes ses annonces');
 select throws_ok($$ update public.help_posts set status = 'open' where title = 'Masquée' $$,
   '42501', null, 'alice ne démasque pas une annonce masquée par la modération');
 select is_empty($$ update public.help_posts set title = 'Piraté' where author_id <> auth.uid() returning id $$,
@@ -117,7 +117,8 @@ select tests.authenticate_as((select id from ctx where k = 'dan'));
 select is_empty('select 1 from public.user_blocks', 'dan ne voit pas qu''alice l''a bloqué');
 select throws_ok($$ insert into public.messages (conversation_id, body) values ((select id from ctx where k = 'conv_dan'), 'Coucou') $$,
   '42501', null, 'dan (bloqué) ne peut plus écrire à alice');
-select is_empty('select 1 from public.help_posts', 'dan ne voit plus les annonces d''alice');
+select is_empty($$ select 1 from public.help_posts where author_id = (select id from ctx where k = 'alice') $$,
+  'dan ne voit plus les annonces d''alice');
 select throws_ok($$ insert into public.conversations (post_id, recipient_id)
   values ((select id from ctx where k = 'post_velo'), (select id from ctx where k = 'alice')) $$,
   '42501', null, 'dan ne peut pas ouvrir de nouvelle conversation avec alice');

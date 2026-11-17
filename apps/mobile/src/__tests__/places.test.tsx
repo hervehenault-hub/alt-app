@@ -6,7 +6,7 @@ import { renderRouter } from 'expo-router/testing-library';
 
 import TabsLayout from '@/app/(tabs)/_layout';
 import ExploreScreen from '@/app/(tabs)/index';
-import PlaceScreen from '@/app/place/[id]';
+import PlaceScreen from '@/app/place/[id]/index';
 import SearchScreen from '@/app/search';
 import SignInScreen from '@/app/sign-in';
 import {
@@ -34,7 +34,7 @@ const ROUTES = {
   '(tabs)/_layout': TabsLayout,
   '(tabs)/index': ExploreScreen,
   search: SearchScreen,
-  'place/[id]': PlaceScreen,
+  'place/[id]/index': PlaceScreen,
   'sign-in': SignInScreen,
 };
 

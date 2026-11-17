@@ -2,17 +2,34 @@ import { useRouter } from 'expo-router';
 
 import { Button, Card, Screen, SignInPrompt, Text } from '@/components';
 import { t } from '@/i18n';
-import { useIsSignedIn } from '@/lib/auth/useIsSignedIn';
+import { signOut, useSession } from '@/lib/auth/session';
 
 /** Onglet Profil : informations générales publiques, contenu personnel réservé aux connectés. */
 export default function ProfileScreen() {
-  const signedIn = useIsSignedIn();
+  const { status, user } = useSession();
   const router = useRouter();
   return (
     <Screen testID="screen-profile">
       <Text variant="display">{t('navigation.profile.title')}</Text>
       <Text>{t('navigation.profile.intro')}</Text>
-      {signedIn ? null : <SignInPrompt testID="sign-in-prompt" />}
+      {status === 'signedIn' && user ? (
+        <Card tone="saffron" testID="profile-account">
+          <Text variant="label">
+            {t('auth.signedInAs', {
+              name: user.displayName ?? user.email ?? t('auth.signedInAnonymousName'),
+            })}
+          </Text>
+          <Button
+            variant="tertiary"
+            label={t('auth.signOut')}
+            accessibilityHint={t('auth.signOutHint')}
+            onPress={() => void signOut()}
+            testID="profile-sign-out"
+          />
+        </Card>
+      ) : (
+        <SignInPrompt testID="sign-in-prompt" />
+      )}
       <Card tone="sky">
         <Text variant="title">{t('navigation.profile.aboutTitle')}</Text>
         <Text>{t('navigation.profile.aboutBody')}</Text>

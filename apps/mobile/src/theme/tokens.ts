@@ -73,6 +73,9 @@ export const colors = {
 
   skeleton: palette.creamDeep,
 
+  /** Voile derrière les feuilles modales (encre à 50 %). */
+  overlay: '#101A4A80',
+
   // Teintes pastel des cartes.
   pastelCoral: palette.coralSoft,
   pastelSaffron: palette.saffronSoft,
@@ -112,6 +115,23 @@ export const organicRadii = {
   borderTopRightRadius: 20,
   borderBottomRightRadius: 36,
   borderBottomLeftRadius: 16,
+} as const;
+
+/**
+ * Couleurs des marqueurs de carte par catégorie (toujours doublées d'une forme et d'une
+ * lettre : la couleur seule ne porte pas l'information).
+ */
+export const mapColors = {
+  vrac: palette.saffron,
+  producteurs: '#7BB661',
+  anti_gaspi: palette.coral,
+  collecte: '#6AA7C8',
+  reparation: '#9B7FD1',
+  ressourcerie: '#E58FB2',
+  cluster: palette.ink,
+  clusterText: palette.white,
+  stroke: palette.ink,
+  userLocation: '#2F6FED',
 } as const;
 
 /** Ombres légères, teintées d'encre. */

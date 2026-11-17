@@ -1,0 +1,30 @@
+# T4.10 — Parcours bout en bout : nouvel utilisateur → onboarding sauté → recherche « vrac » → fiche.
+# Lancer sur émulateur avec un build de développement :  maestro test apps/mobile/e2e/first-place.yaml
+# Objectif : parcours complet en moins de 30 secondes (durée affichée par Maestro).
+appId: app.alt.mobile
+---
+- clearState
+- launchApp
+- assertVisible:
+    id: 'screen-onboarding'
+- tapOn:
+    id: 'onboarding-skip'
+- assertVisible:
+    id: 'screen-explore'
+- tapOn:
+    id: 'explore-search'
+- tapOn:
+    id: 'search-input'
+- inputText: 'vrac'
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: 'place-card-.*'
+    timeout: 5000
+- tapOn:
+    id: 'place-card-.*'
+    index: 0
+- assertVisible:
+    id: 'screen-place'
+- assertVisible:
+    id: 'place-verified'

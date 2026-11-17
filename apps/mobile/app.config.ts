@@ -11,6 +11,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...(config.plugins ?? []),
     'expo-secure-store',
     'expo-apple-authentication',
+    '@maplibre/maplibre-react-native',
     [
       'expo-location',
       {

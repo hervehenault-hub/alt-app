@@ -1062,6 +1062,7 @@ export type Database = {
         Args: Record<PropertyKey, never>;
         Returns: Database['public']['Enums']['user_role'];
       };
+      get_place: { Args: { at_time?: string; place_id: string }; Returns: Json };
       has_accepted_community_rules: { Args: Record<PropertyKey, never>; Returns: boolean };
       immutable_unaccent: { Args: { value: string }; Returns: string };
       is_admin: { Args: Record<PropertyKey, never>; Returns: boolean };
@@ -1078,6 +1079,43 @@ export type Database = {
           label: string;
           need_id: string;
           score: number;
+        }[];
+      };
+      search_places: {
+        Args: {
+          at_time?: string;
+          category_ids?: string[];
+          free_only?: boolean;
+          lat?: number;
+          lng?: number;
+          open_now?: boolean;
+          page_offset?: number;
+          page_size?: number;
+          q?: string;
+          radius_m?: number;
+          sort_by?: string;
+          transit_only?: boolean;
+          walk_only?: boolean;
+        };
+        Returns: {
+          address: string;
+          category_id: string;
+          distance_m: number;
+          estimated_saving_eur: number;
+          id: string;
+          is_free: boolean;
+          is_open: boolean;
+          last_verified_at: string;
+          latitude: number;
+          longitude: number;
+          name: string;
+          needs_recheck: boolean;
+          price_hint: string;
+          relevance: number;
+          status: Database['public']['Enums']['place_status'];
+          total_count: number;
+          transit_accessible: boolean;
+          walk_accessible: boolean;
         }[];
       };
     };

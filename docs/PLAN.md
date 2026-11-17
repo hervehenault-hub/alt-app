@@ -6,7 +6,7 @@ Ce plan découpe le PRD en 12 lots et environ 120 tâches, chacune réalisable e
 
 ## Suivi et mode d’emploi économe
 
-**Fait :** vague 1 (T0.1–T0.8, T0.10, T6.1, T6.2, T10.1, T10.4, T11.4), vague 2 (T1.1–T1.10, T2.1–T2.12, T2.15 ; session C : T2.13 conversion pure, T6.4, T7.1, T9.3) et lot 3 (T3.1–T3.8, code prêt ; Apple et Google attendent vos identifiants). **Reste de la vague 2 :** T0.9 (compte Expo à créer). **Lot 4 :** T4.1–T4.9 faits (carte native à valider sur build de développement), T4.10 écrit (Maestro, à lancer sur émulateur). **Démo web :** `pnpm demo:build` (voir `docs/DEMO.md`). **Lots 6 et 7 :** T6.3, T6.5–T6.8, T7.3–T7.5 faits (T7.2 SQL et T7.6 restent). **Lot 5 (côté app) :** T5.1 (en SQL), T5.2, T5.4, T5.5, T5.13 faits. **Suite :** T5.3, T5.6–T5.12 (back-office), T2.14.
+**Fait :** vague 1 (T0.1–T0.8, T0.10, T6.1, T6.2, T10.1, T10.4, T11.4), vague 2 (T1.1–T1.10, T2.1–T2.12, T2.15 ; session C : T2.13 conversion pure, T6.4, T7.1, T9.3) et lot 3 (T3.1–T3.8, code prêt ; Apple et Google attendent vos identifiants). **Reste de la vague 2 :** T0.9 (compte Expo à créer). **Lot 4 :** T4.1–T4.9 faits (carte native à valider sur build de développement), T4.10 écrit (Maestro, à lancer sur émulateur). **Démo web :** `pnpm demo:build` (voir `docs/DEMO.md`). **Lots 6 et 7 :** T6.3, T6.5–T6.8, T7.3–T7.5 faits (T7.2 SQL et T7.6 restent). **Lot 5 (côté app) :** T5.1 (en SQL), T5.2, T5.4, T5.5, T5.13 faits. **Lot 8 :** T8.2, T8.3, T8.4, T8.6 faits (démo : quartiers de Bordeaux locaux). **Suite :** T8.5 messagerie, T8.1 quartiers en base, T5.3, T5.6–T5.12 (back-office), T2.14.
 
 **Pour lancer une tâche avec un minimum de consommation :** une seule session à la fois, nouvelle conversation à chaque lot, consigne courte :
 

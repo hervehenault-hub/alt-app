@@ -3,6 +3,10 @@
  * Préparation commune des tests : stockage en mémoire et modules natifs simulés
  * (secure-store, localisation, Apple, Google n'existent pas dans Jest).
  */
+import {
+  resetJourneyProgressForTests,
+  setProgressRepositoryForTests,
+} from '@/features/journey/progress';
 import { setPlacesRepositoryForTests } from '@/features/places/repository';
 import { resetSearchStateForTests } from '@/features/places/searchState';
 import { resetAnalyticsForTests } from '@/lib/analytics';
@@ -68,6 +72,8 @@ jest.mock('expo-clipboard', () => ({ setStringAsync: jest.fn(async () => true) }
 
 beforeEach(() => {
   resetSearchStateForTests();
+  resetJourneyProgressForTests();
+  setProgressRepositoryForTests(undefined);
   setPlacesRepositoryForTests(undefined);
   setStorage(createMemoryStorage());
   // Par défaut : pas de serveur (comme le mode démo) ; les tests qui en ont besoin en injectent un.

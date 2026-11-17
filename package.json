@@ -20,7 +20,9 @@
     "db:reset": "supabase db reset",
     "db:types": "supabase gen types typescript --local --schema public > packages/shared/src/database.types.ts && prettier --write packages/shared/src/database.types.ts",
     "test:db": "supabase test db",
-    "demo:build": "pnpm --filter @alt/mobile demo:build"
+    "demo:build": "pnpm --filter @alt/mobile demo:build",
+    "content:sql": "node scripts/load-content.mjs",
+    "content:load": "node scripts/load-content.mjs --apply"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

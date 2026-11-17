@@ -7,4 +7,11 @@ describe("Écran d'accueil", () => {
     await render(<HomeScreen />);
     expect(screen.getByRole('header', { name: 'Alt.' })).toBeOnTheScreen();
   });
+
+  it('propose chaque catégorie comme bouton accessible', async () => {
+    await render(<HomeScreen />);
+    for (const name of ['Vrac', 'Réparation', 'Réemploi', 'Anti-gaspi', 'Producteurs locaux']) {
+      expect(screen.getByRole('button', { name })).toBeOnTheScreen();
+    }
+  });
 });

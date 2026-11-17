@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, typecheck, tests, secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6 # version lue dans "packageManager" (package.json)
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Anti-secret (service_role interdit dans apps/)
+        run: pnpm check:secrets
+
+      - name: Format
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Tests unitaires
+        run: pnpm test
+
+      - name: Bundle Expo (iOS + Android)
+        working-directory: apps/mobile
+        run: pnpm exec expo export --platform ios --platform android --output-dir ../../dist/mobile
+
+  database:
+    name: Base de données (Supabase + pgTAP)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Démarrer Supabase local (services utiles aux tests seulement)
+        run: pnpm db:start:ci
+
+      - name: Tests pgTAP
+        run: pnpm test:db
+
+      - name: Types Supabase à jour
+        run: |
+          pnpm db:types
+          git diff --exit-code -- packages/shared/src/database.types.ts \
+            || (echo "::error::Types obsolètes : lancez « pnpm db:types » et commitez le résultat." && exit 1)
+
+      - name: Arrêter Supabase
+        if: always()
+        run: pnpm db:stop

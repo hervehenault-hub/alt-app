@@ -7,7 +7,12 @@ import { join, relative } from 'node:path';
  */
 const SRC = join(__dirname, '..');
 // Le présent fichier contient des exemples volontaires pour tester le détecteur.
-const ALLOWED = new Set(['theme/tokens.ts', '__tests__/no-hex-colors.test.ts']);
+// Le test de contraste utilise le noir et le blanc purs comme valeurs de référence WCAG.
+const ALLOWED = new Set([
+  'theme/tokens.ts',
+  'theme/tokens.contrast.test.ts',
+  '__tests__/no-hex-colors.test.ts',
+]);
 const COLOR_LITERAL = /#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?)\(/;
 
 function listSourceFiles(dir: string): string[] {

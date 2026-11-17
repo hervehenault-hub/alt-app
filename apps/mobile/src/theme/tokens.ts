@@ -147,3 +147,30 @@ export const ICON_STROKE_WIDTH = 2;
 
 /** Taille de texte à partir de laquelle on parle de « grand texte » (WCAG : 24 px / 18,66 px gras). */
 export const LARGE_TEXT_MIN_SIZE = 24;
+
+/**
+ * Familles de polices (noms enregistrés au chargement, voir `src/theme/fonts.ts`).
+ * Une famille par graisse : Android ignore `fontWeight` sur les polices personnalisées.
+ */
+export const fontFamilies = {
+  /** Playfair Display : UNIQUEMENT les grands titres (≥ 24 pt). */
+  displayBold: 'PlayfairDisplay_700Bold',
+  /** Inter : tout le reste (texte, données, boutons). */
+  regular: 'Inter_400Regular',
+  medium: 'Inter_500Medium',
+  semiBold: 'Inter_600SemiBold',
+} as const;
+
+/**
+ * Variantes typographiques. Les tailles sont des tailles de BASE : le système les
+ * agrandit selon le réglage d'accessibilité de l'utilisateur (`allowFontScaling`).
+ */
+export const textVariants = {
+  display: { fontFamily: fontFamilies.displayBold, fontSize: 36, lineHeight: 44 },
+  title: { fontFamily: fontFamilies.displayBold, fontSize: 24, lineHeight: 32 },
+  body: { fontFamily: fontFamilies.regular, fontSize: 16, lineHeight: 24 },
+  caption: { fontFamily: fontFamilies.regular, fontSize: 13, lineHeight: 18 },
+  label: { fontFamily: fontFamilies.semiBold, fontSize: 16, lineHeight: 22 },
+} as const;
+
+export type TextVariant = keyof typeof textVariants;

@@ -10,5 +10,12 @@ export {
   type ReliabilityBadgeProps,
   type ReliabilityStatus,
 } from './ReliabilityBadge';
+export {
+  SegmentedControl,
+  type SegmentedControlProps,
+  type SegmentOption,
+} from './SegmentedControl';
 export { Skeleton, type SkeletonProps } from './Skeleton';
 export { Highlight, Text, type TextProps } from './Text';
+export { TextField, type TextFieldProps } from './TextField';
+export { Toggle, type ToggleProps } from './Toggle';

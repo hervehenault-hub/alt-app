@@ -6,12 +6,14 @@
 import { categories } from './categories';
 import { common } from './common';
 import { home } from './home';
+import { reliability } from './reliability';
 import { ui } from './ui';
 
 export const fr = {
   categories,
   common,
   home,
+  reliability,
   ui,
 } as const;
 

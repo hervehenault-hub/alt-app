@@ -4,5 +4,11 @@ export { Card, type CardProps, type CardTone } from './Card';
 export { Chip, type ChipProps } from './Chip';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
 export { Icon, type IconProps } from './Icon';
+export {
+  RELIABILITY_STATUSES,
+  ReliabilityBadge,
+  type ReliabilityBadgeProps,
+  type ReliabilityStatus,
+} from './ReliabilityBadge';
 export { Skeleton, type SkeletonProps } from './Skeleton';
 export { Highlight, Text, type TextProps } from './Text';

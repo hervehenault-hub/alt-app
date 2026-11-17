@@ -31,3 +31,9 @@ export { parisCalendarDate, parisUtcOffsetHours, type CalendarDate } from './tim
 
 // Jardin de progression (T9.3)
 export * from './garden';
+
+// Onboarding (T3.5)
+export * from './onboarding';
+
+// Géolocalisation : choix de la position (T3.6)
+export * from './geo/location';

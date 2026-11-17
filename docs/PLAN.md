@@ -6,7 +6,7 @@ Ce plan découpe le PRD en 12 lots et environ 120 tâches, chacune réalisable e
 
 ## Suivi et mode d’emploi économe
 
-**Fait :** vague 1 (T0.1–T0.8, T0.10, T6.1, T6.2, T10.1, T10.4, T11.4) et vague 2 session C (T2.13 conversion pure, T6.4, T7.1, T9.3). **En cours :** T1.1–T1.10, T2.1–T2.12, T2.15.
+**Fait :** vague 1 (T0.1–T0.8, T0.10, T6.1, T6.2, T10.1, T10.4, T11.4), vague 2 (T1.1–T1.10, T2.1–T2.12, T2.15 ; session C : T2.13 conversion pure, T6.4, T7.1, T9.3) et lot 3 (T3.1–T3.8, code prêt ; Apple et Google attendent vos identifiants). **Reste de la vague 2 :** T0.9 (compte Expo à créer). **En cours :** lot 4.
 
 **Pour lancer une tâche avec un minimum de consommation :** une seule session à la fois, nouvelle conversation à chaque lot, consigne courte :
 

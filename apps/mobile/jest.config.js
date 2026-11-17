@@ -8,6 +8,7 @@ const lucideCjs = path.dirname(require.resolve('lucide-react-native'));
 module.exports = {
   preset: 'jest-expo',
   roots: ['<rootDir>/src'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^lucide-react-native/icons/(.*)$': `${lucideCjs}/icons/$1.js`,

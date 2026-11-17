@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import KeyRound from 'lucide-react-native/icons/key-round';
 
 import { t } from '@/i18n';
@@ -6,9 +7,10 @@ import { EmptyState } from './EmptyState';
 
 /**
  * Invitation à se connecter, affichée à la place du contenu personnel.
- * Le bouton est inactif tant que l'authentification (T3.1) n'existe pas.
+ * Le bouton ouvre l'écran de connexion.
  */
 export function SignInPrompt({ testID }: { testID?: string }) {
+  const router = useRouter();
   return (
     <EmptyState
       testID={testID}
@@ -17,7 +19,7 @@ export function SignInPrompt({ testID }: { testID?: string }) {
       message={t('signInPrompt.message')}
       action={{
         label: t('signInPrompt.action'),
-        disabled: true,
+        onPress: () => router.push('/sign-in'),
         accessibilityHint: t('signInPrompt.actionHint'),
       }}
     />

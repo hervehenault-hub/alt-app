@@ -1,3 +1,4 @@
+import { Redirect } from 'expo-router';
 import { Tabs } from 'expo-router/js-tabs';
 import type { LucideIcon } from 'lucide-react-native';
 import CircleUser from 'lucide-react-native/icons/circle-user';
@@ -9,6 +10,8 @@ import { StyleSheet, View } from 'react-native';
 
 import { Icon } from '@/components';
 import { t, type TranslationKey } from '@/i18n';
+import { useOnboarding } from '@/lib/onboarding';
+import { isOnboardingDone } from '@alt/shared';
 import { colors, fontFamilies, radii, spacing } from '@/theme';
 
 interface TabDefinition {
@@ -36,6 +39,10 @@ function TabIcon({ icon, focused }: { icon: LucideIcon; focused: boolean }) {
 }
 
 export default function TabsLayout() {
+  const onboarding = useOnboarding();
+  // Premier lancement : onboarding (sautable) avant l'exploration.
+  if (!onboarding.loaded) return null;
+  if (!isOnboardingDone(onboarding.state)) return <Redirect href="/onboarding" />;
   return (
     <Tabs
       screenOptions={{

@@ -6,7 +6,6 @@ import ImpactScreen from '@/app/(tabs)/impact';
 import ExploreScreen from '@/app/(tabs)/index';
 import JourneyScreen from '@/app/(tabs)/parcours';
 import ProfileScreen from '@/app/(tabs)/profil';
-import { useIsSignedIn } from '@/lib/auth/useIsSignedIn';
 
 const ROUTES = {
   '(tabs)/_layout': TabsLayout,
@@ -30,10 +29,6 @@ function tabButton(label: string) {
 }
 
 describe('Navigation par onglets', () => {
-  it('le hook provisoire useIsSignedIn renvoie false (remplacé en T3.1)', () => {
-    expect(useIsSignedIn()).toBe(false);
-  });
-
   it('ouvre Explorer par défaut et affiche les 5 onglets', async () => {
     await renderRouter(ROUTES, { initialUrl: '/' });
     expect(screen).toHavePathname('/');
@@ -52,12 +47,12 @@ describe('Navigation par onglets', () => {
   });
 
   it.each(TABS)(
-    '$label : invitation à se connecter selon le besoin, bouton inactif',
+    '$label : invitation à se connecter selon le besoin, qui ouvre la connexion',
     async ({ path, signInPrompt }) => {
       await renderRouter(ROUTES, { initialUrl: path });
       if (signInPrompt) {
         expect(screen.getByTestId('sign-in-prompt')).toBeOnTheScreen();
-        expect(screen.getByRole('button', { name: 'Se connecter' })).toBeDisabled();
+        expect(screen.getByRole('button', { name: 'Se connecter' })).toBeEnabled();
       } else {
         expect(screen.queryByTestId('sign-in-prompt')).toBeNull();
       }

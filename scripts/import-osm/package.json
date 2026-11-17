@@ -1,0 +1,21 @@
+{
+  "name": "@alt/import-osm",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Conversion d'éléments OpenStreetMap (Overpass) en lieux Alt. — fonctions pures, insertion en base à la vague 3.",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "jest",
+    "fetch": "node src/cli.ts"
+  },
+  "dependencies": {
+    "@alt/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.16.22",
+    "@swc/jest": "^0.2.39",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.5.2"
+  }
+}

@@ -122,6 +122,25 @@ importers:
         specifier: ^30.5.2
         version: 30.5.2(@types/node@26.6.6)
 
+  scripts/import-osm:
+    dependencies:
+      '@alt/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+    devDependencies:
+      '@swc/core':
+        specifier: ^1.16.22
+        version: 1.16.22
+      '@swc/jest':
+        specifier: ^0.2.39
+        version: 0.2.39(@swc/core@1.16.22)
+      '@types/jest':
+        specifier: ^30.0.0
+        version: 30.0.0
+      jest:
+        specifier: ^30.5.2
+        version: 30.5.2(@types/node@26.6.6)
+
 packages:
 
   2g@1.0.1:

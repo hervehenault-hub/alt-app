@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src/**/*.ts", "fixtures/*.json"],
+  "compilerOptions": {
+    // Les imports internes portent l'extension .ts pour que `node src/cli.ts` fonctionne
+    // directement (suppression des types native de Node 22).
+    "allowImportingTsExtensions": true,
+    "types": ["jest", "node"]
+  }
+}

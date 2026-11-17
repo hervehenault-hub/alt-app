@@ -5,12 +5,24 @@
  */
 import { categories } from './categories';
 import { common } from './common';
+import { devCatalogue } from './devCatalogue';
 import { home } from './home';
+import { navigation } from './navigation';
+import { reliability } from './reliability';
+import { signInPrompt } from './signInPrompt';
+import { taxonomy } from './taxonomy';
+import { ui } from './ui';
 
 export const fr = {
   categories,
   common,
+  devCatalogue,
   home,
+  navigation,
+  reliability,
+  signInPrompt,
+  taxonomy,
+  ui,
 } as const;
 
 export type Translations = typeof fr;

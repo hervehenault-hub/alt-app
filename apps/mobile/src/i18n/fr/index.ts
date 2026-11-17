@@ -7,6 +7,7 @@ import { categories } from './categories';
 import { common } from './common';
 import { home } from './home';
 import { reliability } from './reliability';
+import { taxonomy } from './taxonomy';
 import { ui } from './ui';
 
 export const fr = {
@@ -14,6 +15,7 @@ export const fr = {
   common,
   home,
   reliability,
+  taxonomy,
   ui,
 } as const;
 

@@ -48,6 +48,9 @@ jobs:
         working-directory: apps/mobile
         run: pnpm exec expo export --platform ios --platform android --output-dir ../../dist/mobile
 
+      - name: Démo web (mode démo, sans serveur)
+        run: pnpm demo:build
+
   database:
     name: Base de données (Supabase + pgTAP)
     runs-on: ubuntu-latest

@@ -1,4 +1,5 @@
 import {
+  isOpenAt,
   mapPlaceJson,
   mapSearchRows,
   NEEDS,
@@ -81,7 +82,8 @@ export function createDemoRepository(now: () => Date = () => new Date()): Places
       });
     },
     async get(id) {
-      return DEMO_PLACES.find((p) => p.id === id) ?? null;
+      const place = DEMO_PLACES.find((p) => p.id === id);
+      return place ? { ...place, isOpen: isOpenAt(place.openingHours, now()) } : null;
     },
     async suggest(query) {
       return suggestNeeds(NEEDS, query, 3);

@@ -14,6 +14,8 @@ export default tseslint.config(
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
+      'apps/mobile/dist-demo/**',
+      'apps/mobile/public/maplibre/**',
       '**/.expo/**',
       '**/coverage/**',
       '**/expo-env.d.ts',

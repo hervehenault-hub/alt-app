@@ -32,6 +32,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     name: config.name ?? 'Alt.',
     slug: config.slug ?? 'alt',
     ios: { ...config.ios, usesAppleSignIn: true },
+    // Démo web dans un sous-dossier d'un site (ex. DEMO_BASE_URL=/alt), voir docs/DEMO.md.
+    experiments: {
+      ...config.experiments,
+      ...(process.env.DEMO_BASE_URL ? { baseUrl: process.env.DEMO_BASE_URL } : {}),
+    },
     plugins,
     extra: {
       ...config.extra,

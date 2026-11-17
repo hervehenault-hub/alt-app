@@ -30,3 +30,8 @@ supabase/.temp/
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Démo web (pnpm demo:build)
+apps/mobile/dist-demo/
+apps/mobile/alt-demo-web.zip
+apps/mobile/public/maplibre/

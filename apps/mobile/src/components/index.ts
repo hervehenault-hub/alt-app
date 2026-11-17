@@ -15,7 +15,9 @@ export {
   type SegmentedControlProps,
   type SegmentOption,
 } from './SegmentedControl';
+export { Screen, type ScreenProps } from './Screen';
+export { SignInPrompt } from './SignInPrompt';
 export { Skeleton, type SkeletonProps } from './Skeleton';
-export { Highlight, Text, type TextProps } from './Text';
+export { Highlight, splitHighlight, Text, TextWithHighlight, type TextProps } from './Text';
 export { TextField, type TextFieldProps } from './TextField';
 export { Toggle, type ToggleProps } from './Toggle';

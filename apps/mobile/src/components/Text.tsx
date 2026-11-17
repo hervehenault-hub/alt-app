@@ -67,3 +67,29 @@ const styles = StyleSheet.create({
     color: colors.onHighlight,
   },
 });
+
+/**
+ * Découpe `text` autour de la première occurrence de `keyword`
+ * (fonction pure, utilisée par `TextWithHighlight`).
+ */
+export function splitHighlight(text: string, keyword: string): [string, string, string] {
+  const index = keyword ? text.indexOf(keyword) : -1;
+  if (index < 0) return [text, '', ''];
+  return [text.slice(0, index), keyword, text.slice(index + keyword.length)];
+}
+
+/** Texte dont un mot clé (issu des traductions) est surligné en safran. */
+export function TextWithHighlight({
+  text,
+  highlight,
+  ...props
+}: Omit<TextProps, 'children'> & { text: string; highlight: string }) {
+  const [before, keyword, after] = splitHighlight(text, highlight);
+  return (
+    <Text {...props}>
+      {before}
+      {keyword ? <Highlight>{keyword}</Highlight> : null}
+      {after}
+    </Text>
+  );
+}

@@ -2,6 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { t } from '@/i18n';
 import { HOME_CATEGORIES } from '@/lib/categories';
+import { colors, MIN_TOUCH_TARGET, radii, spacing } from '@/theme';
 
 /** Écran d'accueil provisoire. */
 export default function HomeScreen() {
@@ -35,19 +36,17 @@ export default function HomeScreen() {
   );
 }
 
-const COLORS = { background: '#F7F5EF', text: '#1F3D2B', chip: '#E3EBDD' } as const;
-
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
-    backgroundColor: COLORS.background,
+    padding: spacing.lg,
+    backgroundColor: colors.background,
   },
-  title: { fontSize: 40, fontWeight: '700', color: COLORS.text },
-  subtitle: { marginTop: 12, fontSize: 16, textAlign: 'center', color: COLORS.text },
-  sectionTitle: { marginTop: 32, fontSize: 18, fontWeight: '600', color: COLORS.text },
+  title: { fontSize: 40, fontWeight: '700', color: colors.text },
+  subtitle: { marginTop: 12, fontSize: 16, textAlign: 'center', color: colors.text },
+  sectionTitle: { marginTop: 32, fontSize: 18, fontWeight: '600', color: colors.text },
   categories: {
     marginTop: 16,
     flexDirection: 'row',
@@ -57,13 +56,13 @@ const styles = StyleSheet.create({
   },
   // Cible tactile ≥ 44 pt (règle d'accessibilité du projet).
   chip: {
-    minHeight: 44,
-    minWidth: 44,
-    paddingHorizontal: 16,
+    minHeight: MIN_TOUCH_TARGET,
+    minWidth: MIN_TOUCH_TARGET,
+    paddingHorizontal: spacing.md,
     justifyContent: 'center',
-    borderRadius: 22,
-    backgroundColor: COLORS.chip,
+    borderRadius: radii.pill,
+    backgroundColor: colors.pastelSky,
   },
   chipPressed: { opacity: 0.7 },
-  chipText: { fontSize: 16, color: COLORS.text },
+  chipText: { fontSize: 16, color: colors.text },
 });

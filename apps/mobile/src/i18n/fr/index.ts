@@ -5,6 +5,7 @@
  */
 import { categories } from './categories';
 import { common } from './common';
+import { devCatalogue } from './devCatalogue';
 import { home } from './home';
 import { navigation } from './navigation';
 import { reliability } from './reliability';
@@ -15,6 +16,7 @@ import { ui } from './ui';
 export const fr = {
   categories,
   common,
+  devCatalogue,
   home,
   navigation,
   reliability,

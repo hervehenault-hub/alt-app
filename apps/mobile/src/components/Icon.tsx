@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { colors, ICON_STROKE_WIDTH, type ColorToken } from '@/theme';
 
 export interface IconProps {
-  /** Icône `lucide-react-native` (ex. `import { Store } from 'lucide-react-native'`). */
+  /** Icône `lucide-react-native` (ex. `import Store from 'lucide-react-native/icons/store'` : import par icône, pour ne pas embarquer toute la bibliothèque). */
   icon: LucideIcon;
   size?: number;
   /** Couleur du trait (défaut : marine). */

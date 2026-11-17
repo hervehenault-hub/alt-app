@@ -1,4 +1,8 @@
-import { BadgeCheck, RefreshCw, Store, Users, type LucideIcon } from 'lucide-react-native';
+import type { LucideIcon } from 'lucide-react-native';
+import BadgeCheck from 'lucide-react-native/icons/badge-check';
+import RefreshCw from 'lucide-react-native/icons/refresh-cw';
+import Store from 'lucide-react-native/icons/store';
+import Users from 'lucide-react-native/icons/users';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 
 import { t, type TranslationKey } from '@/i18n';

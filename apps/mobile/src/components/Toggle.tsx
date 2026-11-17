@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react-native';
+import Check from 'lucide-react-native/icons/check';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { colors, MIN_TOUCH_TARGET, radii, spacing } from '@/theme';

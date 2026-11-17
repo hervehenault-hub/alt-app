@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
-import { Leaf, Sprout } from 'lucide-react-native';
+import Leaf from 'lucide-react-native/icons/leaf';
+import Sprout from 'lucide-react-native/icons/sprout';
 import { useState } from 'react';
 import { AccessibilityInfo, StyleSheet } from 'react-native';
 

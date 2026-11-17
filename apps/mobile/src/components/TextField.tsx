@@ -1,4 +1,4 @@
-import { CircleAlert } from 'lucide-react-native';
+import CircleAlert from 'lucide-react-native/icons/circle-alert';
 import { useEffect, useId, useState } from 'react';
 import { AccessibilityInfo, StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 

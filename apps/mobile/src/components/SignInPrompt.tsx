@@ -1,4 +1,4 @@
-import { KeyRound } from 'lucide-react-native';
+import KeyRound from 'lucide-react-native/icons/key-round';
 
 import { t } from '@/i18n';
 

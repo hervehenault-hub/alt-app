@@ -1,12 +1,10 @@
 import { Tabs } from 'expo-router/js-tabs';
-import {
-  CircleUser,
-  Compass,
-  HandHeart,
-  Route,
-  Sparkles,
-  type LucideIcon,
-} from 'lucide-react-native';
+import type { LucideIcon } from 'lucide-react-native';
+import CircleUser from 'lucide-react-native/icons/circle-user';
+import Compass from 'lucide-react-native/icons/compass';
+import HandHeart from 'lucide-react-native/icons/hand-heart';
+import Route from 'lucide-react-native/icons/route';
+import Sparkles from 'lucide-react-native/icons/sparkles';
 import { StyleSheet, View } from 'react-native';
 
 import { Icon } from '@/components';

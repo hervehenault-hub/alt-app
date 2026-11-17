@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react-native';
-import { Leaf } from 'lucide-react-native';
+import Leaf from 'lucide-react-native/icons/leaf';
 
 import { Icon } from '@/components/Icon';
 

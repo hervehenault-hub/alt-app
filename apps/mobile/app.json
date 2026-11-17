@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Alt.",
+    "slug": "alt",
+    "version": "0.1.0",
+    "scheme": "alt",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "platforms": ["ios", "android"],
+    "ios": {
+      "bundleIdentifier": "app.alt.mobile",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "app.alt.mobile"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

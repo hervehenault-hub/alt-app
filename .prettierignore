@@ -1,0 +1,10 @@
+node_modules
+dist
+.expo
+coverage
+pnpm-lock.yaml
+supabase/.temp
+# Contenus gérés par d'autres sessions
+content/
+docs/rgpd/
+docs/beta/

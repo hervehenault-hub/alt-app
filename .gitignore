@@ -1,0 +1,32 @@
+# Dépendances
+node_modules/
+
+# Expo / Metro
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+*.tsbuildinfo
+
+# Builds natifs (générés par prebuild)
+apps/mobile/ios/
+apps/mobile/android/
+
+# Tests
+coverage/
+
+# Environnement : seul .env.example est versionné
+.env
+.env.*
+!.env.example
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+
+# Divers
+.DS_Store
+*.log
+.idea/
+.vscode/*
+!.vscode/extensions.json

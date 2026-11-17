@@ -6,11 +6,13 @@
 import { categories } from './categories';
 import { common } from './common';
 import { home } from './home';
+import { ui } from './ui';
 
 export const fr = {
   categories,
   common,
   home,
+  ui,
 } as const;
 
 export type Translations = typeof fr;

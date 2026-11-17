@@ -30,8 +30,12 @@ import {
  */
 function configureWorker() {
   if (typeof document === 'undefined') return;
-  const entry = Array.from(document.scripts).find((s) => s.src.includes('/_expo/static/js/web/'));
-  const base = entry ? entry.src.slice(0, entry.src.indexOf('_expo/')) : `${location.origin}/`;
+  const marker = '/static/js/web/';
+  const entry = Array.from(document.scripts).find((s) => s.src.includes(marker));
+  // …/<base>/_expo/static/js/web/entry.js → …/<base>/
+  const base = entry
+    ? entry.src.slice(0, entry.src.lastIndexOf('/', entry.src.indexOf(marker) - 1) + 1)
+    : `${location.origin}/`;
   setWorkerUrl(`${base}maplibre/maplibre-gl-worker.mjs`);
 }
 

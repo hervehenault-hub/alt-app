@@ -41,10 +41,10 @@ const indexPath = join(out, 'index.html');
 const frameCss = `
     <style id="alt-demo-frame">
       body { background: #FBE6C6; }
-      @media (min-width: 700px) and (min-height: 700px) {
+      @media (min-width: 700px) and (min-height: 560px) {
         body { display: flex; align-items: center; justify-content: center; gap: 48px; }
         #root {
-          flex: 0 0 auto; width: 390px; height: min(844px, calc(100vh - 48px));
+          flex: 0 0 auto; width: 390px; height: min(844px, calc(100vh - 32px));
           border: 12px solid #101A4A; border-radius: 48px; overflow: hidden;
           box-shadow: 0 30px 60px -20px rgba(16, 26, 74, 0.45); background: #FFF3E0;
         }
@@ -53,7 +53,7 @@ const frameCss = `
         display: none; max-width: 320px; color: #101A4A;
         font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.5;
       }
-      @media (min-width: 1000px) and (min-height: 700px) {
+      @media (min-width: 1000px) and (min-height: 560px) {
         #alt-demo-aside { display: block; }
       }
       #alt-demo-aside h1 { font-family: Georgia, serif; font-size: 44px; margin: 0 0 12px; }

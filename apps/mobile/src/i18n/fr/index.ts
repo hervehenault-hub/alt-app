@@ -12,6 +12,7 @@ import { home } from './home';
 import { impact } from './impact';
 import { journey } from './journey';
 import { location } from './location';
+import { mutualAid } from './mutualAid';
 import { navigation } from './navigation';
 import { onboarding } from './onboarding';
 import { places } from './places';
@@ -31,6 +32,7 @@ export const fr = {
   impact,
   journey,
   location,
+  mutualAid,
   navigation,
   onboarding,
   places,

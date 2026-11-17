@@ -1,3 +1,5 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Slot } from 'expo-router';
 import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 
 import TabsLayout from '@/app/(tabs)/_layout';
@@ -7,7 +9,17 @@ import ExploreScreen from '@/app/(tabs)/index';
 import JourneyScreen from '@/app/(tabs)/parcours';
 import ProfileScreen from '@/app/(tabs)/profil';
 
+/** Comme le layout racine de l'app : fournit le cache des requêtes. */
+function RootLayout() {
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <Slot />
+    </QueryClientProvider>
+  );
+}
+
 const ROUTES = {
+  _layout: RootLayout,
   '(tabs)/_layout': TabsLayout,
   '(tabs)/index': ExploreScreen,
   '(tabs)/parcours': JourneyScreen,

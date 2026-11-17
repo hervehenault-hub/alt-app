@@ -41,3 +41,6 @@ export * from './geo/location';
 // Lieux : types, conversion des réponses SQL, recherche locale (lot 4)
 export * from './places';
 export { NEEDS } from './places/needs';
+
+// Entraide (lot 8)
+export * from './mutual-aid';

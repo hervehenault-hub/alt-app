@@ -37,3 +37,7 @@ export * from './onboarding';
 
 // Géolocalisation : choix de la position (T3.6)
 export * from './geo/location';
+
+// Lieux : types, conversion des réponses SQL, recherche locale (lot 4)
+export * from './places';
+export { NEEDS } from './places/needs';

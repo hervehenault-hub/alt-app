@@ -11,6 +11,7 @@ import { home } from './home';
 import { location } from './location';
 import { navigation } from './navigation';
 import { onboarding } from './onboarding';
+import { places } from './places';
 import { privacy } from './privacy';
 import { reliability } from './reliability';
 import { signInPrompt } from './signInPrompt';
@@ -26,6 +27,7 @@ export const fr = {
   location,
   navigation,
   onboarding,
+  places,
   privacy,
   reliability,
   signInPrompt,

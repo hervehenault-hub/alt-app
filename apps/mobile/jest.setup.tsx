@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports -- types des modules simulés par Jest */
 /**
  * Préparation commune des tests : stockage en mémoire et modules natifs simulés
  * (secure-store, localisation, Apple, Google n'existent pas dans Jest).
  */
+import { setPlacesRepositoryForTests } from '@/features/places/repository';
+import { resetSearchStateForTests } from '@/features/places/searchState';
 import { resetAnalyticsForTests } from '@/lib/analytics';
 import { resetAuthForTests } from '@/lib/auth/session';
 import { clearPendingAction } from '@/lib/auth/useRequireAccount';
@@ -47,7 +50,25 @@ jest.mock('@react-native-google-signin/google-signin', () => ({
   },
 }));
 
+// Carte native : non disponible dans Jest (rendu par un composant vide).
+jest.mock('@maplibre/maplibre-react-native', () => {
+  const { forwardRef } = jest.requireActual<typeof import('react')>('react');
+  const { View } = jest.requireActual<typeof import('react-native')>('react-native');
+  const Stub = forwardRef((props: object, _ref) => <View {...props} />);
+  return { Map: Stub, Camera: Stub, GeoJSONSource: Stub, Layer: Stub };
+});
+
+// FlashList (ESM) : remplacée par FlatList, même API pour ce que l'app utilise.
+jest.mock('@shopify/flash-list', () => {
+  const { FlatList } = jest.requireActual<typeof import('react-native')>('react-native');
+  return { FlashList: FlatList };
+});
+
+jest.mock('expo-clipboard', () => ({ setStringAsync: jest.fn(async () => true) }));
+
 beforeEach(() => {
+  resetSearchStateForTests();
+  setPlacesRepositoryForTests(undefined);
   setStorage(createMemoryStorage());
   // Par défaut : pas de serveur (comme le mode démo) ; les tests qui en ont besoin en injectent un.
   setSupabaseForTests(null);

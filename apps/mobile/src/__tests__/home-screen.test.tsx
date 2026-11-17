@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { render, screen } from '@testing-library/react-native';
 
 import ExploreScreen from '@/app/(tabs)/index';
 
@@ -16,20 +16,11 @@ describe('Écran d’accueil (onglet Explorer)', () => {
     }
   });
 
-  it('propose chaque catégorie comme filtre sélectionnable', async () => {
+  it('les 4 domaines sont des tuiles qui ouvrent la recherche (T4.4)', async () => {
     await render(<ExploreScreen />);
-    const names = [
-      'Vrac',
-      'Producteurs locaux',
-      'Anti-gaspi',
-      'Réparation',
-      'Ressourcerie',
-      'Points de collecte',
-    ];
-    for (const name of names) {
+    for (const name of ['Alimentation', 'Quotidien et déchets', 'Réparation', 'Réemploi']) {
       expect(screen.getByRole('button', { name })).toBeOnTheScreen();
     }
-    await fireEvent.press(screen.getByRole('button', { name: 'Vrac' }));
-    expect(screen.getByRole('button', { name: 'Vrac' })).toBeSelected();
+    expect(screen.getByRole('search', { name: 'Rechercher' })).toBeOnTheScreen();
   });
 });

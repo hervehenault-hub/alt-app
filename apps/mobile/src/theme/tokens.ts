@@ -132,6 +132,9 @@ export const mapColors = {
   clusterText: palette.white,
   stroke: palette.ink,
   userLocation: '#2F6FED',
+  /** Plan simplifié hors ligne (démo). */
+  land: palette.creamDeep,
+  water: '#B9D8EC',
 } as const;
 
 /** Ombres légères, teintées d'encre. */

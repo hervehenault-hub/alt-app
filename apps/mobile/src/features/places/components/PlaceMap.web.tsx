@@ -1,5 +1,6 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
+import type { PlaceSummary } from '@alt/shared';
 import {
   Map as MapLibreMap,
   Marker,
@@ -13,60 +14,132 @@ import { StyleSheet, View } from 'react-native';
 
 import { Button, Text } from '@/components';
 import { t } from '@/i18n';
-import { colors, mapColors, radii, spacing } from '@/theme';
+import { BORDEAUX_NEIGHBORHOODS } from '@/lib/location';
+import { colors, fontFamilies, mapColors, radii, spacing } from '@/theme';
 
 import {
   CATEGORY_COLOR_EXPRESSION,
+  CATEGORY_LETTER,
   DEFAULT_ZOOM,
   MAP_STYLE_URL,
   toFeatureCollection,
   type PlaceMapProps,
 } from './mapData';
+import { OFFLINE_STYLE, onlineTilesReachable } from './offlineMap';
 
 /**
  * Le « worker » de maplibre-gl est servi à côté de l'app (copié par `pnpm demo:build` dans
- * public/maplibre). On calcule son adresse depuis le script principal pour fonctionner aussi
- * dans un sous-dossier.
+ * public/maplibre). Son adresse part de l'adresse de base de la page AU DÉMARRAGE, notée par
+ * index.html dans `__ALT_BASE__` (l'app change ensuite l'adresse en naviguant). Fonctionne à la
+ * racine d'un site, dans un sous-dossier et dans la visionneuse d'artefacts.
  */
-function configureWorker() {
-  if (typeof document === 'undefined') return;
-  const marker = '/static/js/web/';
-  const entry = Array.from(document.scripts).find((s) => s.src.includes(marker));
-  // …/<base>/_expo/static/js/web/entry.js → …/<base>/
-  const base = entry
-    ? entry.src.slice(0, entry.src.lastIndexOf('/', entry.src.indexOf(marker) - 1) + 1)
-    : `${location.origin}/`;
-  setWorkerUrl(`${base}maplibre/maplibre-gl-worker.mjs`);
+export function workerUrl(base: string): string {
+  return new URL('maplibre/maplibre-gl-worker.js', base).toString();
 }
 
-/** Carte web (maplibre-gl) : mêmes marqueurs, regroupement et attribution que sur mobile. */
+function configureWorker() {
+  if (typeof document === 'undefined') return;
+  const base = (window as { __ALT_BASE__?: string }).__ALT_BASE__ ?? document.baseURI;
+  setWorkerUrl(workerUrl(base));
+}
+
+type Mode = 'loading' | 'online' | 'offline';
+
+/** Marqueur HTML d'un lieu (plan hors ligne : pas de polices distantes pour les lettres). */
+function placeMarkerElement(place: PlaceSummary, onOpen: () => void): HTMLElement {
+  const el = document.createElement('button');
+  el.type = 'button';
+  el.textContent = CATEGORY_LETTER[place.categoryId];
+  el.setAttribute(
+    'aria-label',
+    t('places.map.marker', {
+      name: place.name,
+      category: t(`taxonomy.categories.${place.categoryId}`),
+    }),
+  );
+  el.title = place.name;
+  Object.assign(el.style, {
+    width: '28px',
+    height: '28px',
+    borderRadius: '14px',
+    border: `2px solid ${mapColors.stroke}`,
+    background: mapColors[place.categoryId],
+    color: mapColors.stroke,
+    font: `600 12px ${fontFamilies.medium}, system-ui, sans-serif`,
+    cursor: 'pointer',
+    padding: '0',
+  });
+  el.addEventListener('click', (event) => {
+    event.stopPropagation();
+    onOpen();
+  });
+  return el;
+}
+
+function labelElement(text: string): HTMLElement {
+  const el = document.createElement('div');
+  el.textContent = text;
+  el.setAttribute('aria-hidden', 'true');
+  Object.assign(el.style, {
+    font: `500 11px ${fontFamilies.medium}, system-ui, sans-serif`,
+    color: colors.textMuted,
+    textTransform: 'uppercase',
+    letterSpacing: '0.06em',
+    pointerEvents: 'none',
+    whiteSpace: 'nowrap',
+  });
+  return el;
+}
+
+/**
+ * Carte web (maplibre-gl). En ligne : fonds OpenFreeMap, marqueurs regroupés.
+ * Sans accès aux fonds (démo publiée, hors connexion) : plan simplifié embarqué (Garonne,
+ * quartiers) avec les mêmes lieux, toujours interactif.
+ */
 export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMapProps) {
   const container = useRef<HTMLDivElement | null>(null);
   const map = useRef<MapLibreMap | null>(null);
+  const placeMarkers = useRef<Marker[]>([]);
   const openRef = useRef(onOpenPlace);
   useEffect(() => {
     openRef.current = onOpenPlace;
   }, [onOpenPlace]);
   const data = useMemo(() => toFeatureCollection(places), [places]);
-  const [failed, setFailed] = useState(false);
+  const [mode, setMode] = useState<Mode>('loading');
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (!container.current) return;
+    let alive = true;
+    void onlineTilesReachable(MAP_STYLE_URL).then(
+      (ok) => alive && setMode(ok ? 'online' : 'offline'),
+    );
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!container.current || mode === 'loading') return;
     configureWorker();
     const instance = new MapLibreMap({
       container: container.current,
-      style: MAP_STYLE_URL,
+      style: mode === 'online' ? MAP_STYLE_URL : OFFLINE_STYLE,
       center: [center.longitude, center.latitude],
       zoom: DEFAULT_ZOOM,
       attributionControl: false,
     });
     map.current = instance;
-    // Style ou tuiles injoignables (hors connexion) : message clair, la liste reste utilisable.
-    instance.on('error', () => {
-      if (!instance.isStyleLoaded()) setFailed(true);
-    });
     instance.addControl(new NavigationControl({ showCompass: false }), 'top-right');
     instance.on('load', () => {
+      if (mode === 'offline') {
+        for (const n of BORDEAUX_NEIGHBORHOODS) {
+          new Marker({ element: labelElement(n.name), anchor: 'center' })
+            .setLngLat([n.center.longitude, n.center.latitude])
+            .addTo(instance);
+        }
+        setReady(true);
+        return;
+      }
       instance.addSource('places', {
         type: 'geojson',
         data,
@@ -130,22 +203,36 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
         instance.on('mouseenter', layer, () => (instance.getCanvas().style.cursor = 'pointer'));
         instance.on('mouseleave', layer, () => (instance.getCanvas().style.cursor = ''));
       }
+      setReady(true);
     });
     return () => {
+      placeMarkers.current.forEach((m) => m.remove());
+      placeMarkers.current = [];
       instance.remove();
       map.current = null;
+      setReady(false);
     };
-    // La carte est créée une seule fois ; les données sont mises à jour ci-dessous.
+    // La carte est créée une fois par mode ; les lieux sont mis à jour ci-dessous.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mode]);
 
   useEffect(() => {
-    const source = map.current?.getSource('places') as GeoJSONSource | undefined;
-    source?.setData(data);
-  }, [data]);
+    const instance = map.current;
+    if (!instance || !ready) return;
+    if (mode === 'online') {
+      (instance.getSource('places') as GeoJSONSource | undefined)?.setData(data);
+      return;
+    }
+    placeMarkers.current.forEach((m) => m.remove());
+    placeMarkers.current = places.map((p) =>
+      new Marker({ element: placeMarkerElement(p, () => openRef.current(p.id)) })
+        .setLngLat([p.longitude, p.latitude])
+        .addTo(instance),
+    );
+  }, [data, places, mode, ready]);
 
   useEffect(() => {
-    if (!map.current || !userPosition) return;
+    if (!map.current || !ready || !userPosition) return;
     const dot = document.createElement('div');
     Object.assign(dot.style, {
       width: '16px',
@@ -160,7 +247,7 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
     return () => {
       marker.remove();
     };
-  }, [userPosition]);
+  }, [userPosition, ready]);
 
   return (
     <View
@@ -169,11 +256,6 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
       accessibilityLabel={t('places.map.a11yLabel')}
     >
       <div ref={container} style={{ position: 'absolute', inset: 0 }} />
-      {failed ? (
-        <View style={styles.failed} testID="place-map-error">
-          <Text align="center">{t('places.map.loadError')}</Text>
-        </View>
-      ) : null}
       <View style={styles.overlay} pointerEvents="box-none">
         <Button
           variant="secondary"
@@ -185,8 +267,8 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
           testID="map-recenter"
         />
       </View>
-      <Text variant="caption" style={styles.attribution}>
-        {t('places.map.attribution')}
+      <Text variant="caption" style={styles.attribution} testID={`map-mode-${mode}`}>
+        {mode === 'offline' ? t('places.map.offlineAttribution') : t('places.map.attribution')}
       </Text>
     </View>
   );
@@ -195,13 +277,6 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
 const styles = StyleSheet.create({
   container: { flex: 1, minHeight: 360, borderRadius: radii.lg, overflow: 'hidden' },
   overlay: { position: 'absolute', right: spacing.sm, bottom: spacing.xl },
-  failed: {
-    ...StyleSheet.absoluteFill,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: spacing.lg,
-    backgroundColor: colors.pastelSky,
-  },
   attribution: {
     position: 'absolute',
     left: spacing.xs,

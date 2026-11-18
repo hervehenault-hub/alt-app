@@ -1,7 +1,7 @@
 /** Recherche, liste, carte et fiche des lieux (lot 4). */
 export const places = {
   explore: {
-    searchPlaceholder: 'Un besoin, un lieu… ex. « grille-pain en panne »',
+    searchPlaceholder: 'Ex. : grille-pain en panne',
     searchLabel: 'Rechercher',
     searchHint: 'Ouvre la recherche de lieux',
     tilesTitle: 'Par où commencer ?',

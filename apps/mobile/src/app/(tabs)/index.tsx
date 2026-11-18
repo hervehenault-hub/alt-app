@@ -62,7 +62,7 @@ export default function ExploreScreen() {
         testID="explore-search"
       >
         <Icon icon={Search} size={22} />
-        <Text color="textMuted" style={styles.searchText}>
+        <Text color="textMuted" style={styles.searchText} numberOfLines={1} ellipsizeMode="tail">
           {t('places.explore.searchPlaceholder')}
         </Text>
       </Pressable>
@@ -112,9 +112,12 @@ export default function ExploreScreen() {
   );
 }
 
+const SEARCH_BAR_HEIGHT = MIN_TOUCH_TARGET + 12;
+
 const styles = StyleSheet.create({
   searchBar: {
-    minHeight: MIN_TOUCH_TARGET + 12,
+    // Hauteur fixe : une seule ligne, quelle que soit la taille du texte.
+    height: SEARCH_BAR_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
@@ -124,7 +127,8 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     backgroundColor: colors.surface,
   },
-  searchText: { flex: 1 },
+  // Texte d'exemple : italique, 20 % moins opaque que le texte secondaire.
+  searchText: { flex: 1, fontStyle: 'italic', opacity: 0.8 },
   pressed: { opacity: 0.85 },
   locationRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
   flex: { flex: 1 },

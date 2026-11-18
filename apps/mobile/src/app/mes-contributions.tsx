@@ -45,7 +45,7 @@ export default function MyContributionsScreen() {
                   status: t(`contribution.mine.status.${c.status}`),
                 })}
               </Text>
-              <Text variant="caption">{formatVerifiedDate(c.createdAt)}</Text>
+              <Text variant="note">{formatVerifiedDate(c.createdAt)}</Text>
             </Card>
           ))}
         </View>

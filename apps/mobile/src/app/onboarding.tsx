@@ -38,7 +38,7 @@ export default function OnboardingScreen() {
   return (
     <Screen testID="screen-onboarding">
       <View style={styles.header}>
-        <Text variant="caption">
+        <Text variant="eyebrow">
           {t('onboarding.progress', { current: step + 1, total: TOTAL_STEPS })}
         </Text>
         <Button

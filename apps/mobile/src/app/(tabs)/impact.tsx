@@ -56,11 +56,11 @@ function Figure({
       testID={testID}
     >
       <Card tone={tone} style={styles.figureCard}>
-        <Text variant="caption">{label}</Text>
+        <Text variant="eyebrow">{label}</Text>
         <Text variant="display">{value}</Text>
-        {detail ? <Text>{detail}</Text> : null}
+        {detail ? <Text variant="caption">{detail}</Text> : null}
         <View style={styles.link}>
-          <Text variant="caption">{t('impact.howComputed')}</Text>
+          <Text variant="caption">{t('impact.howComputedShort')}</Text>
           <Icon icon={ChevronRight} size={16} />
         </View>
       </Card>
@@ -88,7 +88,7 @@ export default function ImpactScreen() {
       <Text>
         {isDemoMode() ? t('impact.collectiveDemo', DEMO_CITY) : t('impact.collectiveSoon')}
       </Text>
-      {isDemoMode() ? <Text variant="caption">{t('impact.demoNote')}</Text> : null}
+      {isDemoMode() ? <Text variant="note">{t('impact.demoNote')}</Text> : null}
       <Button
         variant="tertiary"
         label={t('impact.howComputed')}

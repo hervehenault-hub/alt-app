@@ -112,7 +112,7 @@ export function PlaceMap({ places, center, onOpenPlace }: PlaceMapProps) {
           testID="map-recenter"
         />
       </View>
-      <Text variant="caption" style={styles.attribution}>
+      <Text variant="note" style={styles.attribution}>
         {t('places.map.attribution')}
       </Text>
     </View>

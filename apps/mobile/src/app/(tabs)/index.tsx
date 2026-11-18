@@ -45,7 +45,7 @@ export default function ExploreScreen() {
 
   return (
     <Screen testID="screen-explore">
-      <Text variant="caption">{t('common.appName')}</Text>
+      <Text variant="eyebrow">{t('common.appName')}</Text>
       <TextWithHighlight
         variant="display"
         text={t('navigation.explore.title')}
@@ -62,7 +62,7 @@ export default function ExploreScreen() {
         testID="explore-search"
       >
         <Icon icon={Search} size={22} />
-        <Text color="textMuted" style={styles.searchText} numberOfLines={1} ellipsizeMode="tail">
+        <Text variant="note" style={styles.searchText} numberOfLines={1} ellipsizeMode="tail">
           {t('places.explore.searchPlaceholder')}
         </Text>
       </Pressable>
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     backgroundColor: colors.surface,
   },
-  // Texte d'exemple : italique, 20 % moins opaque que le texte secondaire.
-  searchText: { flex: 1, fontStyle: 'italic', opacity: 0.8 },
+  // Exemple : variante « note » (italique, 20 % plus pâle) à la taille du texte courant.
+  searchText: { flex: 1, fontSize: 16, lineHeight: 22 },
   pressed: { opacity: 0.85 },
   locationRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
   flex: { flex: 1 },

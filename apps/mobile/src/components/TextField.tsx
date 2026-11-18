@@ -48,7 +48,7 @@ export function TextField({
         accessibilityState={{ disabled: !editable }}
         aria-describedby={error ? errorId : undefined}
         editable={editable}
-        placeholderTextColor={colors.textMuted}
+        placeholderTextColor={colors.placeholder}
         onFocus={(event) => {
           setFocused(true);
           onFocus?.(event);
@@ -60,6 +60,8 @@ export function TextField({
         {...rest}
         style={[
           styles.input,
+          // Exemple affiché (champ vide) : italique, comme les autres notes.
+          !rest.value ? styles.placeholder : null,
           focused && styles.focused,
           error ? styles.inputError : null,
           !editable && styles.disabled,
@@ -85,6 +87,7 @@ export function TextField({
 }
 
 const styles = StyleSheet.create({
+  placeholder: { fontStyle: 'italic' },
   container: { gap: spacing.xxs, alignSelf: 'stretch' },
   input: {
     ...textVariants.body,

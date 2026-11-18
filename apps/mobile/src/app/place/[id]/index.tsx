@@ -31,7 +31,7 @@ import {
 import { t, type TranslationKey } from '@/i18n';
 import { trackPlaceViewed } from '@/lib/analytics';
 import { useRequireAccount } from '@/lib/auth/useRequireAccount';
-import { spacing } from '@/theme';
+import { colors, radii, spacing } from '@/theme';
 import { CATEGORY_ICONS } from '@/theme/icons';
 
 const WEEKDAYS = [1, 2, 3, 4, 5, 6, 7] as const;
@@ -111,7 +111,7 @@ export default function PlaceScreen() {
       {backButton}
       <View style={styles.titleRow}>
         <Icon icon={CATEGORY_ICONS[place.categoryId]} size={28} />
-        <Text variant="caption">{category}</Text>
+        <Text variant="eyebrow">{category}</Text>
       </View>
       <Text variant="display">{place.name}</Text>
       <View style={styles.row}>
@@ -155,7 +155,7 @@ export default function PlaceScreen() {
       <Card tone="sky" testID="place-hours">
         <View style={styles.rowBetween}>
           <Text variant="label">{t('places.detail.hours')}</Text>
-          <Text variant="caption">{openLabel(place.isOpen)}</Text>
+          <Text variant="metaStrong">{openLabel(place.isOpen)}</Text>
         </View>
         {WEEKDAYS.map((day) => {
           const slots = slotsForDay(place.openingHours, day);
@@ -166,12 +166,21 @@ export default function PlaceScreen() {
                   .map((s) => t('places.slot', { opens: s.opens, closes: s.closes }))
                   .join(t('places.slotSeparator'));
           return (
-            <View key={day} style={styles.rowBetween}>
-              <Text variant={day === today ? 'label' : 'body'}>
+            <View
+              key={day}
+              style={[styles.hoursRow, day === today && styles.hoursToday]}
+              accessible
+              accessibilityLabel={t('places.detail.hoursA11y', {
+                day: t(`places.weekdays.${day}` as TranslationKey),
+                today: day === today ? t('places.detail.today') : '',
+                hours: value,
+              })}
+            >
+              {/* Aujourd'hui : ligne surlignée et jour en gras, heures au même poids (sinon elles débordent). */}
+              <Text variant={day === today ? 'label' : 'body'} style={styles.hoursDay}>
                 {t(`places.weekdays.${day}` as TranslationKey)}
-                {day === today ? t('places.detail.today') : null}
               </Text>
-              <Text variant={day === today ? 'label' : 'body'}>{value}</Text>
+              <Text align="right">{value}</Text>
             </View>
           );
         })}
@@ -213,7 +222,7 @@ export default function PlaceScreen() {
         </Card>
       ) : null}
 
-      <Text variant="caption">
+      <Text variant="note">
         {t('places.detail.source', {
           source: t(`places.sources.${place.source}` as TranslationKey),
         })}
@@ -266,6 +275,15 @@ export default function PlaceScreen() {
 const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
   row: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing.sm },
+  // Horaires : le jour se replie dans sa colonne, les heures restent sur leur ligne.
+  hoursRow: { flexDirection: 'row', justifyContent: 'space-between', gap: spacing.sm },
+  hoursDay: { flex: 1 },
+  hoursToday: {
+    backgroundColor: colors.pastelSaffron,
+    borderRadius: radii.sm,
+    marginHorizontal: -spacing.xs,
+    paddingHorizontal: spacing.xs,
+  },
   rowBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',

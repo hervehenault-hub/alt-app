@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Text as RNText, StyleSheet, type TextProps as RNTextProps } from 'react-native';
 
-import { colors, textVariants, type ColorToken, type TextVariant } from '@/theme';
+import { colors, NOTE_OPACITY, textVariants, type ColorToken, type TextVariant } from '@/theme';
 
 export interface TextProps extends RNTextProps {
   /** Variante typographique (défaut : `body`). */
@@ -13,6 +13,8 @@ export interface TextProps extends RNTextProps {
 }
 
 const HEADER_VARIANTS: readonly TextVariant[] = ['display', 'title'];
+/** Variantes discrètes : gris secondaire par défaut. */
+const MUTED_VARIANTS: readonly TextVariant[] = ['caption', 'eyebrow', 'note'];
 
 /**
  * Texte de l'app. Respecte toujours la taille de police choisie par l'utilisateur
@@ -28,7 +30,7 @@ export function Text({
   children,
   ...rest
 }: TextProps) {
-  const resolvedColor = color ?? (variant === 'caption' ? 'textMuted' : 'text');
+  const resolvedColor = color ?? (MUTED_VARIANTS.includes(variant) ? 'textMuted' : 'text');
   return (
     <RNText
       allowFontScaling
@@ -39,6 +41,7 @@ export function Text({
       style={[
         textVariants[variant],
         { color: colors[resolvedColor] },
+        variant === 'note' ? { opacity: NOTE_OPACITY } : null,
         align ? { textAlign: align } : null,
         style,
       ]}

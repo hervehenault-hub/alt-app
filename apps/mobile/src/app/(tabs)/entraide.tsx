@@ -65,7 +65,7 @@ export default function MutualAidScreen() {
 
   const postCard = (p: HelpPost, own: boolean) => (
     <Card key={p.id} tone={p.type === 'offer' ? 'white' : 'sky'} testID={`help-post-${p.id}`}>
-      <Text variant="caption">
+      <Text variant="eyebrow">
         {t('mutualAid.postMeta', {
           type: t(`mutualAid.types.${p.type}`),
           service: t(`mutualAid.services.${p.service}`),
@@ -74,7 +74,7 @@ export default function MutualAidScreen() {
       </Text>
       <Text variant="label">{p.title}</Text>
       <Text>{p.description}</Text>
-      <Text variant="caption">
+      <Text variant="note">
         {p.status === 'open'
           ? t('mutualAid.expires', { date: formatVerifiedDate(p.expiresAt) })
           : t('mutualAid.closed')}

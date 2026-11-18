@@ -267,7 +267,7 @@ export function PlaceMap({ places, center, userPosition, onOpenPlace }: PlaceMap
           testID="map-recenter"
         />
       </View>
-      <Text variant="caption" style={styles.attribution} testID={`map-mode-${mode}`}>
+      <Text variant="note" style={styles.attribution} testID={`map-mode-${mode}`}>
         {mode === 'offline' ? t('places.map.offlineAttribution') : t('places.map.attribution')}
       </Text>
     </View>

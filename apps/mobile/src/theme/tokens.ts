@@ -73,6 +73,9 @@ export const colors = {
 
   skeleton: palette.creamDeep,
 
+  /** Exemples dans les champs : gris secondaire à 80 % sur fond blanc. */
+  placeholder: '#6C7395',
+
   /** Voile derrière les feuilles modales (encre à 50 %). */
   overlay: '#101A4A80',
 
@@ -188,12 +191,35 @@ export const fontFamilies = {
  * Variantes typographiques. Les tailles sont des tailles de BASE : le système les
  * agrandit selon le réglage d'accessibilité de l'utilisateur (`allowFontScaling`).
  */
+/**
+ * Hiérarchie typographique, du plus fort au plus discret :
+ * 1. `display` — titre de l'écran (un seul par écran) ;
+ * 2. `title` — titre de section ou de carte ;
+ * 3. `eyebrow` — sur-titre : contexte AU-DESSUS d'un titre (catégorie, « Votre prochaine idée ») ;
+ * 4. `label` — ce qu'on cherche des yeux : nom d'un lieu, valeur clé, action ;
+ * 5. `body` — texte de lecture ;
+ * 6. `metaStrong` — fait important d'une ligne d'infos (« Ouvert », « ≈ 4 € économisés ») ;
+ * 7. `caption` — infos secondaires (distance, date, compteur), en gris ;
+ * 8. `note` — apartés, mentions et exemples : italique, plus pâle (jamais d'information essentielle).
+ */
 export const textVariants = {
   display: { fontFamily: fontFamilies.displayBold, fontSize: 36, lineHeight: 44 },
   title: { fontFamily: fontFamilies.displayBold, fontSize: 24, lineHeight: 32 },
+  eyebrow: {
+    fontFamily: fontFamilies.semiBold,
+    fontSize: 12,
+    lineHeight: 16,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+  },
   body: { fontFamily: fontFamilies.regular, fontSize: 16, lineHeight: 24 },
   caption: { fontFamily: fontFamilies.regular, fontSize: 13, lineHeight: 18 },
+  metaStrong: { fontFamily: fontFamilies.semiBold, fontSize: 13, lineHeight: 18 },
+  note: { fontFamily: fontFamilies.regular, fontSize: 13, lineHeight: 18, fontStyle: 'italic' },
   label: { fontFamily: fontFamilies.semiBold, fontSize: 16, lineHeight: 22 },
 } as const;
+
+/** Opacité des notes et des exemples (20 % plus pâles que le texte secondaire). */
+export const NOTE_OPACITY = 0.8;
 
 export type TextVariant = keyof typeof textVariants;

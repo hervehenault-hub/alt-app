@@ -35,10 +35,10 @@ export default function MethodScreen() {
         label={t('impact.method.back')}
         onPress={() => (router.canGoBack() ? router.back() : router.replace('/impact'))}
       />
-      <Text variant="caption">{t('impact.method.title')}</Text>
+      <Text variant="eyebrow">{t('impact.method.title')}</Text>
       <Text variant="display">{t(`impact.method.${metric}.title`)}</Text>
       <Text testID="method-formula">{t(`impact.method.${metric}.formula`)}</Text>
-      <Text variant="caption">{t('impact.method.version', { version: METHOD_VERSION })}</Text>
+      <Text variant="note">{t('impact.method.version', { version: METHOD_VERSION })}</Text>
 
       <Text variant="title">{t('impact.method.factorsTitle')}</Text>
       {factors.length === 0 ? (
@@ -57,9 +57,7 @@ export default function MethodScreen() {
                 </Text>
               ) : null}
               <Text variant="caption">{f.source_name}</Text>
-              <Text variant="caption">
-                {t('impact.method.uncertainty', { text: f.uncertainty })}
-              </Text>
+              <Text variant="note">{t('impact.method.uncertainty', { text: f.uncertainty })}</Text>
               <Button
                 variant="tertiary"
                 label={t('impact.method.openSource')}

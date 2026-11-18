@@ -6,7 +6,8 @@ import Compass from 'lucide-react-native/icons/compass';
 import HandHeart from 'lucide-react-native/icons/hand-heart';
 import Route from 'lucide-react-native/icons/route';
 import Sparkles from 'lucide-react-native/icons/sparkles';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon } from '@/components';
 import { t, type TranslationKey } from '@/i18n';
@@ -40,16 +41,30 @@ function TabIcon({ icon, focused }: { icon: LucideIcon; focused: boolean }) {
 
 export default function TabsLayout() {
   const onboarding = useOnboarding();
+  const insets = useSafeAreaInsets();
   // Premier lancement : onboarding (sautable) avant l'exploration.
   if (!onboarding.loaded) return null;
   if (!isOnboardingDone(onboarding.state)) return <Redirect href="/onboarding" />;
+  const bottomSpace = Math.max(
+    insets.bottom,
+    Platform.OS === 'web' ? WEB_BOTTOM_SPACE : spacing.xs,
+  );
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarStyle: styles.tabBar,
+        // Barre plus haute : libellés jamais coupés, au-dessus de la barre système du téléphone
+        // (et des coins arrondis du cadre de la démo web).
+        tabBarStyle: [
+          styles.tabBar,
+          {
+            height: TAB_BAR_HEIGHT + bottomSpace,
+            paddingBottom: bottomSpace,
+          },
+        ],
+        tabBarItemStyle: styles.item,
         tabBarLabelStyle: styles.label,
         tabBarAllowFontScaling: true,
         sceneStyle: { backgroundColor: colors.background },
@@ -74,12 +89,19 @@ export default function TabsLayout() {
   );
 }
 
+/** Hauteur de la zone des onglets, hors marge du bas. */
+const TAB_BAR_HEIGHT = 64;
+/** Démo web : les coins arrondis du cadre de téléphone mangent le bas de l'écran. */
+const WEB_BOTTOM_SPACE = 20;
+
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: colors.surface,
     borderTopColor: colors.divider,
+    paddingTop: spacing.xs,
   },
-  label: { fontFamily: fontFamilies.medium, fontSize: 12 },
+  item: { justifyContent: 'center', gap: 2 },
+  label: { fontFamily: fontFamilies.medium, fontSize: 12, lineHeight: 16 },
   iconPill: {
     minWidth: 48,
     paddingHorizontal: spacing.xs,

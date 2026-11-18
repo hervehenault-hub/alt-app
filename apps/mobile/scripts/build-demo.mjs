@@ -10,7 +10,7 @@
  * Sous-dossier d'un site (ex. https://exemple.fr/alt/) : DEMO_BASE_URL=/alt pnpm demo:build
  */
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,9 +23,16 @@ const require = createRequire(import.meta.url);
 // 1. Worker de la carte
 const maplibreDist = join(dirname(require.resolve('maplibre-gl/package.json')), 'dist');
 const publicMaplibre = join(root, 'public', 'maplibre');
+// Extension .js (et non .mjs) : servie partout avec le bon type, y compris par les hébergeurs
+// et visionneuses qui ne connaissent pas .mjs (sinon le worker refuse de démarrer).
+rmSync(publicMaplibre, { recursive: true, force: true });
 mkdirSync(publicMaplibre, { recursive: true });
-for (const file of ['maplibre-gl-worker.mjs', 'maplibre-gl-shared.mjs']) {
-  copyFileSync(join(maplibreDist, file), join(publicMaplibre, file));
+for (const name of ['maplibre-gl-worker', 'maplibre-gl-shared']) {
+  const source = readFileSync(join(maplibreDist, `${name}.mjs`), 'utf8').replaceAll(
+    'maplibre-gl-shared.mjs',
+    'maplibre-gl-shared.js',
+  );
+  writeFileSync(join(publicMaplibre, `${name}.js`), source);
 }
 
 // 2. Export web
@@ -73,7 +80,10 @@ let html = readFileSync(indexPath, 'utf8')
     '<title>Alt.</title>',
     '<title>Alt. — démo</title>\n    <meta name="description" content="Démonstration de l’application Alt. (Bordeaux)" />\n    <meta name="theme-color" content="#FFF3E0" />',
   )
-  .replace('</head>', `${frameCss}\n  </head>`)
+  .replace(
+    '</head>',
+    `${frameCss}\n    <script>window.__ALT_BASE__ = document.baseURI;</script>\n  </head>`,
+  )
   .replace('<body>', `<body>${aside}`);
 writeFileSync(indexPath, html);
 

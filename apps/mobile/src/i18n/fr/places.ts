@@ -68,6 +68,7 @@ export const places = {
     recenter: 'Recentrer',
     recenterHint: 'Recentre la carte sur votre position',
     attribution: '© OpenStreetMap, OpenFreeMap',
+    offlineAttribution: 'Plan simplifié (sans connexion)',
     loadError: 'Carte indisponible (connexion internet nécessaire). La liste reste disponible.',
     unavailable: 'La carte s’affiche dans l’app installée. Utilisez la liste en attendant.',
     marker: '{{name}} ({{category}})',

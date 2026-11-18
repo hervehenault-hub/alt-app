@@ -135,7 +135,7 @@ export default function PublishHelpPostScreen() {
         ))}
       </View>
       {errors.neighborhood ? <Text accessibilityRole="alert">{errors.neighborhood}</Text> : null}
-      <Text variant="caption">{t('mutualAid.form.expiry')}</Text>
+      <Text variant="note">{t('mutualAid.form.expiry')}</Text>
       {failed ? (
         <Card tone="coral">
           <Text accessibilityRole="alert">{t('mutualAid.form.errorGeneric')}</Text>

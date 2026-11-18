@@ -85,6 +85,7 @@ export const places = {
     hours: 'Horaires',
     closedDay: 'Fermé',
     today: '\u00a0(aujourd’hui)',
+    hoursA11y: '{{day}}{{today}} : {{hours}}',
     price: 'Prix indicatif',
     saving: 'Économie estimée',
     savingValue: '≈ {{amount}} € par visite',

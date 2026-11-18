@@ -40,12 +40,10 @@ export function PlaceCard({ place, onPress }: PlaceCardProps) {
         </View>
       </View>
       <View style={styles.meta}>
-        <Text variant="caption" color={place.isOpen ? 'text' : 'textMuted'}>
-          {open}
-        </Text>
-        {place.isFree ? <Text variant="caption">{t('places.list.free')}</Text> : null}
+        <Text variant={place.isOpen ? 'metaStrong' : 'caption'}>{open}</Text>
+        {place.isFree ? <Text variant="metaStrong">{t('places.list.free')}</Text> : null}
         {place.estimatedSavingEur !== null ? (
-          <Text variant="caption">
+          <Text variant="metaStrong">
             {t('places.list.saving', { amount: formatEuros(place.estimatedSavingEur) })}
           </Text>
         ) : null}

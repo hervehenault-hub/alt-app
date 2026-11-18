@@ -123,7 +123,7 @@ export default function JourneyScreen() {
         </Card>
       ) : action ? (
         <Card tone="white" organic testID="journey-action">
-          <Text variant="caption">{t('journey.cardEyebrow')}</Text>
+          <Text variant="eyebrow">{t('journey.cardEyebrow')}</Text>
           <Text variant="title" testID="journey-action-title">
             {action.title}
           </Text>
@@ -132,7 +132,7 @@ export default function JourneyScreen() {
             <Text variant="caption">{t(`journey.effort.${action.effort}`)}</Text>
             <Text variant="caption">{t(`journey.kind.${action.kind}`)}</Text>
             {action.saving_eur_per_occurrence > 0 ? (
-              <Text variant="caption">
+              <Text variant="metaStrong">
                 {t('journey.saving', { amount: formatEuros(action.saving_eur_per_occurrence) })}
               </Text>
             ) : null}

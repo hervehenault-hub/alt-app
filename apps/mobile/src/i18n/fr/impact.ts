@@ -13,6 +13,7 @@ export const impact = {
   actionsCount: 'Actions réalisées',
   figureA11y: '{{label}} : {{value}}',
   howComputed: 'Méthode et sources',
+  howComputedShort: 'Méthode',
   howComputedHint: 'Explique comment ce chiffre est calculé',
   zeroTitle: 'Tout commence par un premier geste',
   zeroMessage:

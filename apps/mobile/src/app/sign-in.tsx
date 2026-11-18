@@ -103,7 +103,7 @@ export default function SignInScreen() {
             onPress={() => void run('demo')}
             testID="sign-in-demo"
           />
-          <Text variant="caption">{t('auth.demoNotice')}</Text>
+          <Text variant="note">{t('auth.demoNotice')}</Text>
         </>
       ) : (
         <View style={styles.buttons}>

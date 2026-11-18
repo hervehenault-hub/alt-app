@@ -47,9 +47,12 @@ export const CATALOGUE_MARKER = 'alt-dev-catalogue-screen';
 const SAMPLE_KEYS: Record<TextVariant, Parameters<typeof t>[0]> = {
   display: 'devCatalogue.samples.display',
   title: 'devCatalogue.samples.title',
-  body: 'devCatalogue.samples.body',
-  caption: 'devCatalogue.samples.caption',
+  eyebrow: 'devCatalogue.samples.eyebrow',
   label: 'devCatalogue.samples.label',
+  body: 'devCatalogue.samples.body',
+  metaStrong: 'devCatalogue.samples.metaStrong',
+  caption: 'devCatalogue.samples.caption',
+  note: 'devCatalogue.samples.note',
 };
 
 const CARD_TONES: readonly CardTone[] = ['white', 'cream', 'coral', 'saffron', 'sky'];
